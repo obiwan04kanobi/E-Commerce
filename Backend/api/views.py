@@ -6,6 +6,7 @@ import bcrypt
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from bson.objectid import ObjectId
 import razorpay
+from datetime import datetime
 
 # Create a Razorpay client
 razorpay_client = razorpay.Client(auth  = ("rzp_test_JDumAGUYVqtCC3", "ZQuFauPLpSKQKZbXhzFTRIKo"))   # Replace with your actual Razorpay key and secret
@@ -57,6 +58,24 @@ def place_order(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 @csrf_exempt
+def login_user(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            email = data.get("email")
+            password = data.get("password")
+
+            # Fetch the user from the database
+            user = users_collection.find_one({"email": email})
+            if user and bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
+                return JsonResponse({"message": "Login successful"}, status=200)
+            else:
+                return JsonResponse({"error": "Invalid credentials"}, status=401)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+@csrf_exempt
 def register_user(request):
     if request.method == "POST":
         try:
@@ -66,7 +85,9 @@ def register_user(request):
                 {
                     "email": data["email"],
                     "username": data["username"],
-                    "password": hashed_password.decode('utf-8')
+                    "password": hashed_password.decode('utf-8'),
+                    "role": data.get("role", "user"),  # Default role as 'user'
+                    "created_at": data.get("created_at", datetime.now().isoformat()),  # Timestamp of signup
                 }
             )
             return JsonResponse({"message": "User registered successfully"}, status=201)
@@ -83,6 +104,16 @@ def get_order(request, order_id):
         return JsonResponse({"error": "Order not found"}, status=404)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
+
+@csrf_exempt
+def get_admin_orders(request):
+    try:
+        orders = list(orders_collection.find())
+        for order in orders:
+            order["_id"] = str(order["_id"])
+        return JsonResponse(orders, safe=False)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 @csrf_exempt
 def update_order(request, order_id):

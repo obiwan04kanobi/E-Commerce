@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../Firebase/Config";
+import axios from 'axios';
 
 const initialState = {
   orders: []
@@ -9,8 +8,8 @@ const initialState = {
 export const FetchAllOrders = createAsyncThunk(
   "order/FetchAllOrders",
   async () => {
-    const response = await getDocs(collection(db, "Orders"));
-    return response;
+    const response = await axios.get("http://localhost:8000/api/orders/");
+    return response.data;
   }
 );
 
@@ -28,9 +27,7 @@ export const orderSlice = createSlice({
         // Handle loading state if needed
       })
       .addCase(FetchAllOrders.fulfilled, (state, action) => {
-        const querySnapshot = action.payload;
-        const orders = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        state.orders = orders;
+        state.orders = action.payload;
       })
       .addCase(FetchAllOrders.rejected, (state, action) => {
         // Handle error state if needed

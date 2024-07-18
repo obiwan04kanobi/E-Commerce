@@ -1,19 +1,13 @@
-// export default Login;
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../Firebase/Config';
 import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Navbar from '../Components/Navbar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [login, setLogin] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const navigateTo = useNavigate();
-  const provider = new GoogleAuthProvider();
   const isLoggedIn = useSelector(state => state.user.isLoggedIn);
 
   useEffect(() => {
@@ -26,32 +20,37 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, login.email, login.password);
-      const user = userCredential.user;
-      toast.success("Login Successfully");
+      const response = await fetch('http://localhost:8000/api/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(login),
+      });
+
+      if (!response.ok) {
+        throw new Error('Invalid credentials');
+      }
+
+      const data = await response.json();
+      toast.success('Login Successfully');
       setLoading(false);
-      navigateTo("/");
+      // Save token or user info in local storage or Redux state if needed
+      navigateTo('/');
     } catch (error) {
-      toast.error("Invalid Credentials");
+      toast.error(error.message || 'Login failed');
       setLoading(false);
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      toast.success("Login Successfully");
-      navigateTo("/");
-    } catch (error) {
-      toast.error(error.message);
-    }
+  const handleGoogleLogin = () => {
+    // Google login is disabled, no action needed
+    toast.info('Google login is currently disabled');
   };
 
   return (
     <>
       <ToastContainer />
-      {/* <Navbar/> */}
       <section className='bg-blue-200 dark:bg-gray-900 min-h-screen flex items-center justify-center'>
         <div className='bg-white shadow-md rounded-lg flex flex-col md:flex-row overflow-hidden'>
           <div className='md:w-1/2 hidden md:flex items-center justify-center bg-cover bg-center' style={{ backgroundImage: 'url(https://picsum.photos/800/600?random=7)' }}>
@@ -125,4 +124,3 @@ const Login = () => {
 };
 
 export default Login;
-

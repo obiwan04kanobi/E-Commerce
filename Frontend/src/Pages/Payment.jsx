@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 const Payment = () => {
   const key_id = "rzp_test_JDumAGUYVqtCC3";
@@ -35,6 +36,8 @@ const Payment = () => {
 
   async function displayRazorpay() {
     const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+
+    const navigateTo = useNavigate(); // Initialize useNavigate for navigation
 
     if (!res) {
       alert("Razorpay SDK failed to load. Are you online?");
@@ -97,7 +100,7 @@ const Payment = () => {
 
             localStorage.clear();
             // Redirect to cart page after successful payment
-            history.push("/cart");
+            navigateTo('/');
           } catch (error) {
             console.error("Error updating order:", error);
           }

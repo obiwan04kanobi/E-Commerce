@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+
 const SignUp = () => {
+  const navigateTo = useNavigate(); // Initialize useNavigate for navigation
+
   const [register, setRegister] = useState({
     email: '',
     username: '',
     password: '',
-    cpassword: ''
+    cpassword: '',
   });
 
   const registerUser = async (e) => {
@@ -16,10 +20,12 @@ const SignUp = () => {
       email: register.email,
       username: register.username,
       password: register.password,
+      Role: 'user', // Default role
+      created_at: new Date().toISOString(), // Timestamp of signup
     };
 
     try {
-      const response = await fetch('http://localhost:8000/api/users/', {
+      const response = await fetch('http://localhost:8000/api/register/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,9 +36,8 @@ const SignUp = () => {
         throw new Error('Failed to register user');
       }
       alert('Registered successfully!');
-      // Assuming navigateTo is a function to navigate after successful registration
-      // Replace with your navigation logic
-      navigateTo('/');
+      // Redirect to home page
+      navigateTo('auth/Login');
     } catch (error) {
       console.error('Error registering user:', error.message);
       alert('Failed to register user');
@@ -118,10 +123,10 @@ const SignUp = () => {
             </button>
             <button
               type="button"
-              // onClick={handleGoogleSignUp}
+              disabled
               className="w-full px-4 py-2 mt-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
             >
-              Sign Up with Google
+              Sign Up with Google (Disabled)
             </button>
           </form>
           <div className="mt-4 flex justify-center items-center">
