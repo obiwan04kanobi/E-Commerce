@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from .models import users_collection, products_collection, orders_collection
 import json
 import bcrypt
+from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from bson.objectid import ObjectId
 import razorpay
@@ -52,6 +53,7 @@ def place_order(request):
                     "paymentStatus": "not paid"
                 }
             )
+
             return JsonResponse({"message": "Order placed successfully", "orderId": str(order.inserted_id)}, status=201)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
@@ -183,3 +185,53 @@ def create_razorpay_order(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
+@csrf_exempt
+def get_all_products(request):
+    try:
+        products = list(products_collection.find())
+        for product in products:
+            product['_id'] = str(product['_id'])  # Convert ObjectId to string
+        return JsonResponse(products, safe=False, status=200)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+def update_product(request, product_id):
+    if request.method == "PUT":
+        try:
+            data = json.loads(request.body)
+            product = products_collection.find_one({'_id': ObjectId(product_id)})
+
+            if not product:
+                return JsonResponse({'error': 'Product not found'}, status=404)
+
+            update_data = {
+                'name': data.get('name', product['name']),
+                'price': data.get('price', product['price']),
+                'stock': data.get('stock', product['stock']),
+                'category': data.get('category', product['category']),
+                'description': data.get('description', product['description']),
+            }
+            products_collection.update_one(
+                {'_id': ObjectId(product_id)},
+                {'$set': update_data}
+            )
+            return JsonResponse({'message': 'Product updated successfully'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def delete_product(request, product_id):
+    if request.method == "DELETE":
+        try:
+            product = products_collection.find_one({'_id': ObjectId(product_id)})
+
+            if not product:
+                return JsonResponse({'error': 'Product not found'}, status=404)
+
+            products_collection.delete_one({'_id': ObjectId(product_id)})
+            return JsonResponse({'message': 'Product deleted successfully'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)

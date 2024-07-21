@@ -9,7 +9,8 @@ const Payment = () => {
   const [searchParams] = useSearchParams();
   const [order, setOrder] = useState(null);
   const userId = useSelector((state) => state.user.userId);
-
+  const navigateTo = useNavigate(); // Initialize useNavigate for navigation
+  
   useEffect(() => {
     fetchOrder();
   }, []);
@@ -37,7 +38,7 @@ const Payment = () => {
   async function displayRazorpay() {
     const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
 
-    const navigateTo = useNavigate(); // Initialize useNavigate for navigation
+
 
     if (!res) {
       alert("Razorpay SDK failed to load. Are you online?");
