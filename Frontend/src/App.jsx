@@ -30,10 +30,15 @@ import OrderSummary from "./Pages/OrderSummary";
 import UpdateProfleAdmin from "./Pages/UpdateProfleAdmin";
 import MyOrders from "./Pages/MyOrders";
 import OrderDetails from "./Pages/OrderDetails";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import BannerAdmin from "./Pages/BannerAdmin";
 
 function App() {
+  // console.log("app")
   const dispatch = useDispatch();
   useEffect(() => {
+    // console.log(dispatch);
     onAuthStateChanged(auth, async(user) => {
       if (user) {
         const uid = user.uid;
@@ -44,7 +49,7 @@ function App() {
           email: user.email,
           userName: user.displayName,
           userId: user.uid,
-          createdAt: query.createdAt,
+          createdAt: query?.createdAt,
           wishList: query.wishList,
           role: query.Role,
         }))
@@ -59,28 +64,31 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route path='/' element={<Home />} />
-            <Route path='auth/SignUp' element={<SignUp />} />
-            <Route path='auth/Login' element={<Login />} />
-            <Route path='auth/Reset' element={<Resetpassword />} />
-            <Route path='admin/product/new' element={<AddProductForm />} />
-            <Route path='admin/product' element={<AllProductAdmin />} />
-            <Route path='product' element={<Products />} />
-            <Route path='cart' element={<Cart />} />
-            <Route path='profile' element={<User />} />
-            <Route path='description/:id' element={<Description />} />
-            <Route path='admin/dashboard' element={<DashboardAdmin />} />
-            <Route path='/checkout' element={<Checkout />} />
+          <Route exact path='/' element={<Layout />}>
+            <Route exact path='/' element={<Home />} />
+            <Route exact path='/auth/SignUp' element={<SignUp />} />
+            <Route exact path='/auth/Login' element={<Login />} />
+            <Route exact path='/auth/Reset' element={<Resetpassword />} />
+            <Route exact path='/admin/product/new' element={<AddProductForm />} />
+            <Route exact path='/admin/product' element={<AllProductAdmin />} />
+            <Route exact path='/product' element={<Products />} />
+            <Route exact path='/cart' element={<Cart />} />
+            <Route exact path='profile' element={<User />} />
+            <Route exact path='/description/:id' element={<Description />} />
+            <Route exact path='/admin/dashboard' element={<DashboardAdmin />} />
+            <Route exact path='/checkout' element={<Checkout />} />
             {/* <Route path='/admin/allproducts' element={<ProductListAdmin />} /> */}
-            <Route path='/admin/orders' element={<OrdersAdmin />} />
-            <Route path='/admin/users' element={<UsersAdmin />} />
-            <Route path='/admin/review' element={<ReviewAdmin />} />
-            <Route path='/payment' element={<Payment />} />
-            <Route path='/ordersummary' element={<OrderSummary />} />
-            <Route path='/updateProfileAdmin' element={<UpdateProfleAdmin />} />
-            <Route path='/order/me' element={<MyOrders />} />
-            <Route path='/order/mee' element={<OrderDetails/>}/>
+            <Route exact path='/admin/orders' element={<OrdersAdmin />} />
+            <Route exact path='/admin/users' element={<UsersAdmin />} />
+            <Route exact path='/admin/review' element={<ReviewAdmin />} />
+            <Route exact path='/payment' element={<Payment />} />
+            <Route exact path='/ordersummary' element={<OrderSummary />} />
+            <Route exact path='/updateProfileAdmin' element={<UpdateProfleAdmin />} />
+            <Route exact path='/order/:id' element={<MyOrders />} />
+            <Route exact path='/order/mee' element={<OrderDetails/>}/>
+            <Route exact path='/about' element={<About/>}/>
+            <Route exact path='/contact' element={<Contact />}/>
+            <Route exact path='/admin/banner' element={<BannerAdmin />}/>
           </Route>
         </Routes>
       </Router>

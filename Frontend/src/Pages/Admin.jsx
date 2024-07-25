@@ -3,10 +3,11 @@ import AdminSidebar from "../components/AdminSidebar";
 import { BsSearch } from "react-icons/bs";
 import userImg from "../assets/userpic.png";
 import { HiTrendingUp, HiTrendingDown } from "react-icons/hi";
-import data from "../assets/data.json";
-import { BarChart, DoughnutChart } from "../components/Charts";
+// import data from "../assets/data.json";
+// import { BarChart, DoughnutChart } from "../components/Charts";
 import { BiMaleFemale } from "react-icons/bi";
 import Table from "../components/DashboardTable";
+import { BarChart, DoughnutChart } from "../Components/Charts";
 
 const dashboard = () => {
   return (

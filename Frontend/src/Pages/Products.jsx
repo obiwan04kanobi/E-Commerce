@@ -18,6 +18,9 @@ const Products = () => {
     const [showFilters, setShowFilters] = useState(false); // State to manage showing/hiding filters
     const navigateTo = useNavigate();
 
+
+    console.log("products")
+
     useEffect(() => {
         getProduct();
     }, []);
@@ -50,6 +53,7 @@ const Products = () => {
         });
         setProducts(filteredProducts);
         setLoading(false);
+        console.log("get product")
     }
 
     const handleFilterChange = (e) => {
@@ -119,10 +123,12 @@ const Products = () => {
                     </div>
                 </div>
             ) : (
-                <div className="container mx-auto px-6 py-6">
+                <div className=''>
+                    
+                <div className="container mx-auto px-6 py-6 ">
                     <div className='flex flex-col justify-center items-center'>
 
-                        <h1 className="text-3xl font-bold mb-4">Products</h1>
+                        <h1 className="text-3xl font-extrabold mb-4">Products</h1>
 
                         {/* Always visible search bar */}
                         <div className="mb-4 flex lg:hidden">
@@ -136,7 +142,7 @@ const Products = () => {
                             />
                             <button
                                 type="button"
-                                onClick={() => link && navigateTo(`/product?q=${link}`)}
+                                // onClick={() => link && navigateTo(`/product?q=${link}`)}
                                 className="ml-2 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
                             >
                                 <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -264,10 +270,11 @@ const Products = () => {
                     {/* Product grid */}
                     <div className="flex flex-wrap justify-center lg:mx-10 gap-4">
                         {products.map((product) => (
-                            <Product key={product.id} doc={product} />
+                            <Product key={product.id}  doc={product} />
                         ))}
                     </div>
                     <ToastContainer />
+                </div>
                 </div>
             )}
         </>
@@ -294,47 +301,88 @@ const Product = ({ doc }) => {
             progress: undefined,
         });
     };
+    const navigateTo = useNavigate();
 
     return (
+        // <div className="max-w-sm mx-auto bg-white border border-gray-200 rounded-lg shadow">
+        //     <img className="w-full h-56 object-cover" src={"https://picsum.photos/300/300"} alt="product" />
+        //     <div className="p-4">
+        //         <h5 className="text-xl font-semibold text-gray-900 mb-2">{doc.Name}</h5>
+        //         <div className="flex items-center mb-2">
+        //             <ReactStars half={true} edit={false} value={doc.Rating} count={5} size={24} color2={'#ffd700'} />
+        //             <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded ml-2">{doc.Rating}</span>
+        //         </div>
+        //         <div className="flex justify-between items-center">
+        //             <span className="text-2xl font-bold text-gray-900">${doc.Price}</span>
+        //             <button
+        //                 onClick={() => handleAddToCart(doc)}
+        //                 className="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+        //             >
+        //                 Add to Cart
+        //             </button>
+        //         </div>
+        //     </div>
+        //     <ToastContainer />
+        // </div>
+        //      <div id={doc} className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{ width: "280px" }}>
+        //      <a href="#">
+        //          <img className="p-3 rounded-t-lg" src={"https://picsum.photos/800/600?random=8"} alt="product image" />
+        //      </a>
+        //      <div className="px-5 pb-5">
+        //          <a href="#">
+        //              <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{doc.Name}</h5>
+        //          </a>
+        //          <div className="flex items-center mt-2.5 mb-5">
+        //              <div className="flex items-center space-x-1 rtl:space-x-reverse">
+        //                  <ReactStars half={true} edit={false} value={doc.Rating} count={5} size={24} color2={'#ffd700'} />
+        //              </div>
+        //              <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{doc.Rating}</span>
+        //          </div>
+        //          <div className="flex items-center justify-between">
+        //              <span className="text-3xl font-bold text-gray-900 dark:text-white">${doc.Price}</span>
+        //              <button onClick={() => handleAddToCart(doc)} className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-500 dark:focus:ring-red-600">Add to cart</button>
+        //          </div>
+        //      </div>
+        //  </div>
         <>
 
-            <div key={doc.Id} className="flex flex-row xl:hidden sm:hidden  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{ width: "420px", height: "auto" }}>
-                <a href="#" className="flex-shrink-0">
-                    <img className="w-40 h-full object-cover rounded-l-lg" src={"https://picsum.photos/800/600?random=6"} alt="product image" />
+            <div key={doc.Id} className="flex flex-row xl:hidden sm:hidden  bg-white border border-gray-200 rounded-lg shadow " style={{ width: "420px", height: "auto" }}>
+                <a href="" className="flex-shrink-0">
+                    <img className="w-40 h-full object-cover rounded-l-lg" src={doc.ImageUrl} alt="product image" />
                 </a>
                 <div className="flex flex-col justify-between p-4 w-full">
-                    <a href="#">
-                        <h5 onClick={() => navigateTo(`/Description/${doc.Id}`)} className=" text-sm sm:text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{doc.Name}</h5>
-                    </a>
+                    <div>
+                        <h5 onClick={() => navigateTo(`/Description/${doc.Id}`)} className="cursor-pointer text-sm sm:text-xl font-semibold tracking-tight text-gray-900 ">{doc.Name}</h5>
+                    </div>
                     <div className="flex items-center">
                         <ReactStars half={true} edit={false} value={doc.Rating} count={5} size={24} color2={'#ffd700'} />
-                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{doc.Rating}</span>
+                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded  ml-3">{doc.Rating}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                        <span className="text-sm  sm:text-3xl font-bold text-gray-900 dark:text-white">${doc.Price}</span>
-                        <button onClick={() => handleAddToCart(doc)} className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 sm:px-5 sm:py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-500 dark:focus:ring-red-600">Add to cart</button>
+                        <span className="text-sm  sm:text-3xl font-bold text-gray-900 ">${doc.Price}</span>
+                        <button onClick={() => handleAddToCart(doc)} className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1.5 sm:px-5 sm:py-2.5 text-center ">Add to cart</button>
                     </div>
                 </div>
                 <ToastContainer />
             </div>
 
-            <div id={doc} className="w-full max-w-sm hidden sm:block bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style={{ width: "280px" }}>
-                <a href="#">
+            <div id={doc} className="w-full max-w-sm hidden sm:block bg-white border border-gray-200 rounded-lg shadow " style={{ width: "280px" }}>
+                <a href="">
                     <img className="p-3 rounded-t-lg" src={"https://picsum.photos/800/600?random=3"} alt="product image" />
                 </a>
                 <div className="px-5 pb-5">
-                    <a href="#">
-                        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{doc.Name}</h5>
-                    </a>
+                    <div>
+                        <h5 onClick={() => navigateTo(`/Description/${doc.Id}`)} className="cursor-pointer text-xl font-semibold tracking-tight text-gray-900 ">{doc.Name}</h5>
+                    </div>
                     <div className="flex items-center mt-2.5 mb-5">
                         <div className="flex items-center space-x-1 rtl:space-x-reverse">
                             <ReactStars half={true} edit={false} value={doc.Rating} count={5} size={24} color2={'#ffd700'} />
                         </div>
-                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{doc.Rating}</span>
+                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded  ms-3">{doc.Rating}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                        <span className="text-3xl font-bold text-gray-900 dark:text-white">${doc.Price}</span>
-                        <button onClick={() => handleAddToCart(doc)} className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-500 dark:focus:ring-red-600">Add to cart</button>
+                        <span className="text-3xl font-bold text-gray-900 ">${doc.Price}</span>
+                        <button onClick={() => handleAddToCart(doc)} className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Add to cart</button>
                     </div>
                 </div>
                 <ToastContainer />

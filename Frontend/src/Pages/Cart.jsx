@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FiMinusCircle, FiPlusCircle, FiTrash2 } from 'react-icons/fi'; // Importing icons for buttons
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from '../Components/Navbar';
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -46,9 +47,12 @@ function Cart() {
   };
 
   return (
+
+    <>
+    <Navbar/>
     <div className="container mx-auto px-4 py-16">
       <ToastContainer position="top-right" autoClose={3000} />
-      <h2 className="text-3xl font-bold mb-8 text-center">Your Shopping Cart</h2>
+      <h2 className="text-3xl font-extrabold mb-8 text-center">Your Shopping Cart</h2>
       {(!cartItems || cartItems.length === 0) ? (
         <p className="text-center text-gray-500">Your cart is empty.</p>
       ) : (
@@ -59,7 +63,7 @@ function Cart() {
                 <div className="flex items-center space-x-4">
                   <img src="https://via.placeholder.com/150" alt={item.Name} className="w-24 h-24 rounded object-cover" />
                   <div>
-                    <Link to={`/product/${item.Id}`} className="text-lg font-medium text-gray-800 hover:text-blue-500">
+                    <Link to={`/product/${item.Id}`} className="lg:text-lg md:text-md text-xsm font-medium text-gray-800 hover:text-blue-500">
                       {item.Name}
                     </Link>
                     <p className="text-gray-500">${Number(item.Price).toFixed(2)}</p>
@@ -105,6 +109,7 @@ function Cart() {
         </div>
       )}
     </div>
+    </>
   );
 }
 

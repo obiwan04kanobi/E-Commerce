@@ -54,6 +54,8 @@ const UsersAdmin = () => {
           subLinks={[
             { text: "All", link: "/admin/product" },
             { text: "New", link: "/admin/product/new" },
+            { text: "Banner", link: "/admin/banner" },
+
           ]}
         />
         <div onClick={() => navigateTo("/admin/orders")}>
@@ -66,7 +68,7 @@ const UsersAdmin = () => {
 
       <div className="w-full shadow-md sm:rounded-lg">
         <div className="text-4xl text-center py-4 font-semibold">Users</div>
-        <div className="w-full overflow-x-auto">
+        {/* <div className="w-full overflow-x-auto">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -113,7 +115,56 @@ const UsersAdmin = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </div> */}
+        <div className="w-full overflow-x-auto">
+  <table className="w-full text-sm sm:text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead className="text-xs sm:text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" className="px-4 py-3 sm:px-6">UserID</th>
+        <th scope="col" className="px-4 py-3 sm:px-6">Name</th>
+        <th scope="col" className="px-4 py-3 sm:px-6">Email</th>
+        <th scope="col" className="px-4 py-3 sm:px-6">Role</th>
+        <th scope="col" className="px-4 py-3 sm:px-6">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {users.map((user) => (
+        <tr key={user.uid} className="border-b border-gray-300">
+          <td className="px-4 py-3 sm:px-6">{user.uid}</td>
+          <td className="px-4 py-3 sm:px-6">{user.username}</td>
+          <td className="px-4 py-3 sm:px-6">{user.email}</td>
+          <td className="px-4 py-3 sm:px-6">{user.Role}</td>
+          <td className="px-4 py-3 sm:px-6">
+            <div className="relative">
+              <select
+                value={user.Role}
+                onChange={(e) => handleRoleChange(user.uid, e.target.value)}
+                className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring"
+              >
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
       </div>
     </div>
     </>

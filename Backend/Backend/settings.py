@@ -16,9 +16,14 @@ DEBUG = True
 ALLOWED_HOSTS = []
 ############################################## By Me ########################################################
 # Add localhost:5173 to CORS allowed origins
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_HTTPONLY = False
+
 
 # Add localhost:5173 to CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [

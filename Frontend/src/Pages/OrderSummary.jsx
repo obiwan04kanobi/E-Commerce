@@ -20,7 +20,8 @@ const OrderSummary = () => {
                 <NavItem icon="fa-qrcode" text="Dashboard" link="/admin/dashboard" />
                 <NavItem icon="fa-cart-shopping" text="Products" link="" subLinks={[
                     { text: "All", Link: "/admin/product" },
-                    { text: "New", link: "/admin/product/new" }
+                    { text: "New", link: "/admin/product/new" },
+                    { text: "Banner", link: "/admin/banner" }
                 ]} />
                 <NavItem icon="fa-cart-shopping" text="Orders" link="/admin/orders" />
                 <NavItem icon="fa-users" text="Users" link="/admin/users" />

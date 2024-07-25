@@ -75,7 +75,8 @@ const DashboardAdmin = () => {
           menuOpen ? "block" : "hidden"
         } md:block w-full md:w-64 bg-slate-50 border-3 p-4 transition-transform duration-300 ease-in-out`}
       >
-        <div onClick={()=> navigateTo("/admin/dashboard")}><NavItem icon="fa-qrcode" text="Dashboard" link="/admin/dashboard"  /></div>
+        <div  onClick={()=> navigateTo("/admin/dashboard")}><NavItem icon="fa-qrcode" text="Dashboard" link="/admin/dashboard"  /></div>
+        <div>
         <NavItem
           icon="fa-cart-shopping"
           text="Products"
@@ -83,8 +84,10 @@ const DashboardAdmin = () => {
           subLinks={[
             { text: "All", link: "/admin/product" },
             { text: "New", link: "/admin/product/new" },
+            { text: "Banner", link: "/admin/banner" },
           ]}
         />
+        </div>
         <div onClick={()=> navigateTo("/admin/orders")}><NavItem icon="fa-cart-shopping" text="Orders" link="/admin/orders" /></div>
         <div onClick={()=> navigateTo("/admin/users")}><NavItem icon="fa-users" text="Users" link="/admin/users" /></div>
       </div>
