@@ -38,37 +38,6 @@ const Description = () => {
           <div class="loader-square"></div>
       </div></div >
         ) : (
-          // <div className="flex flex-col items-center justify-center bg-gray-200 h-screen">
-          //   <div className="flex items-center">
-          //     <img src={image} alt="Random Image" className="w-64 h-64 object-cover rounded-lg mr-4" />
-          //   </div>
-          //   <button onClick={()=>dispatch(AddToWishList({...product,userId}))} className="p-2.5 ms-2 mr-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Add to Wishlist</button>
-          //   <div className="bg-white p-4 rounded shadow-md w-full max-w-2xl">
-          //     <div className="flex items-center mb-4">
-          //       <div className="text-xl font-bold mr-2">{product.Name}</div>
-          //       <div className="text-xl font-medium line-through text-gray-500">{product.Price*1.5}</div>
-          //       <div className="text-xl font-bold ml-2 text-red-500">{product.Price}</div>
-          //     </div>
-          //     <div className="text-gray-600">{product.Description}</div>
-          //     {/* <div className="flex items-center mt-4">
-          //       <div className="bg-blue-500 text-white py-1 px-2 rounded mr-2">Prime Video</div>
-          //       <div className="bg-blue-500 text-white py-1 px-2 rounded mr-2">Disney+</div>
-          //       <div className="bg-blue-500 text-white py-1 px-2 rounded">NETFLIX</div>
-          //     </div> */}
-          //     <div className="flex items-center mt-4">
-          //       <div className="text-xl font-bold mr-2">{parseInt(product.Stock)?"In Stock" : "Out Of Stock"}</div>
-          //       <div className="bg-green-500 text-white py-1 px-2 rounded">{product.Stock}</div>
-          //     </div>
-          //     <div className="flex items-center mt-4">
-          //       <div className="text-xl font-bold mr-2">Ratings</div>
-          //       <div className="text-xl font-medium">{product.Rating}</div>
-          //     </div>
-          //     <div className="flex mt-4">
-          //       <button className="bg-blue-500 text-white py-2 px-4 rounded mr-2">ADD TO CART</button>
-          //       <button className="bg-gray-500 text-white py-2 px-4 rounded">BUY NOW</button>
-          //     </div>
-          //   </div>
-          // </div>
           <div class="bg-gray-100 dark:bg-gray-800 py-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row -mx-4">

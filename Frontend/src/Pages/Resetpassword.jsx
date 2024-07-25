@@ -5,80 +5,70 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../Firebase/Config";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Components/Navbar";
 
 const Resetpassword = () => {
   const [reset, setReset] = useState({
     email: "",
   });
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigateTo = useNavigate();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   useEffect(() => {
-    if (isLoggedIn === true) {
-    //   navigateTo("/");
+    if (isLoggedIn) {
+      // Handle redirection if needed
     }
   }, [isLoggedIn]);
 
   const handleReset = (e) => {
     e.preventDefault();
-    setloading(true);
+    setLoading(true);
     sendPasswordResetEmail(auth, reset.email, {
-      url: "http://localhost:5174/"
+      url: "http://localhost:5174/" // Replace with your actual reset URL
     })
       .then(() => {
-        toast.success("Link Sent Successfully");
-        setloading(false);
+        toast.success("Password reset link sent successfully");
+        setLoading(false);
       })
       .catch((error) => {
         toast.error(error.message);
-        setloading(false);
+        setLoading(false);
       });
   };
 
   return (
     <>
+    <Navbar/>
       <ToastContainer />
-      {/* {loading && <Loader />} */}
-      <section className='bg-blue-200 dark:bg-gray-900'>
-        <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-[87vh] lg:py-0'>
-          <div className='w-full bg-blue-100 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
-            <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
-              <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
+      <section className="">
+        <div className="flex justify-center items-center min-h-[87vh] px-4">
+          <div className="max-w-md w-full bg-white rounded-lg shadow-lg">
+            <div className="p-6 md:p-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
                 Reset Password
               </h1>
-              <form
-                className='space-y-4 md:space-y-6'
-                action='#'
-                onSubmit={handleReset}
-              >
+              <form className="mt-6 space-y-4" onSubmit={handleReset}>
                 <div>
-                  <label
-                    htmlFor='email'
-                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
-                  >
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-900">
                     Your email
                   </label>
                   <input
-                    type='email'
-                    name='email'
-                    id='email'
-                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                    placeholder='name@company.com'
-                    required=''
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="mt-1 block w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="name@company.com"
                     value={reset.email}
-                    onChange={(e) =>
-                      setReset({ ...reset, email: e.target.value })
-                    }
+                    onChange={(e) => setReset({ ...reset, email: e.target.value })}
+                    required
                   />
                 </div>
                 <button
-                aria-label="reset"
-                    
-                  type='submit'
-                  className='w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                  type="submit"
+                  className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 >
-                  Reset Password
+                  {loading ? "Sending..." : "Reset Password"}
                 </button>
               </form>
             </div>

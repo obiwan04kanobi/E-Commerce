@@ -20,7 +20,7 @@ export default function Category() {
             </div>
 
             <div className=' py-3 flex-wrap xl:mx-32  flex-row flex gap-10 justify-center mx-0 sm:mx-0 md:mx-10 lg:mx-10'>
-                <div className='card  flex flex-wrap flex1-row justify-center gap-6'>
+                <div className='card  flex flex-wrap flex1-row justify-center gap-6 '>
                     <div onClick={()=> navigateTo("/product?category=Ethinic")} className='gfg sm:p-10 p-6   sm:pb-7 pb-3 border-2 rounded-lg hover:text-white hover:bg-red-500 hover:cursor-pointer '>
                         <img src={"https://cdn.pixabay.com/photo/2022/11/20/06/31/woman-7603569_1280.jpg"} alt="" style={{ height: "140px", width:"100px" }} className='image'/>
                         <div className='flex justify-center pt-4'>

@@ -13,7 +13,7 @@ import DashboardAdmin from './DashboardAdmin'
 
 const Home = () => {
     return (
-        <div>
+        <div className=''>
             {/* <UpperNavbar /> */}
             <Navbar />
             <Main_Section />
